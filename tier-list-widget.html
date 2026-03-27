@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skincare Tier List</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f7f6f2;
+    --surface: #ffffff;
+    --border: rgba(0,0,0,0.1);
+    --border-strong: rgba(0,0,0,0.18);
+    --text: #1a1a18;
+    --text-muted: #6b6b65;
+    --text-faint: #9e9e97;
+    --radius: 10px;
+    --radius-sm: 6px;
+
+    --s-bg: #fff8ed; --s-border: #f5c842; --s-label: #7a4e00; --s-tag: #b36b00;
+    --a-bg: #eef7e8; --a-border: #8ecf5a; --a-label: #2e5e10; --a-tag: #3d7a17;
+    --b-bg: #e8f3fc; --b-border: #6ab4f0; --b-label: #0d4a82; --b-tag: #1562a8;
+    --c-bg: #f0eeff; --c-border: #a89cf5; --c-label: #3a2f99; --c-tag: #4e40bc;
+    --d-bg: #fef0e8; --d-border: #f5a07a; --d-label: #7a2e10; --d-tag: #9e3c15;
+    --f-bg: #feecec; --f-border: #f09090; --f-label: #7a1818; --f-tag: #9e2020;
+
+    --tag-aha-bg: #eef7e8; --tag-aha-text: #2e5e10;
+    --tag-bha-bg: #e8f3fc; --tag-bha-text: #0d4a82;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141412; --surface: #1e1e1b; --border: rgba(255,255,255,0.08);
+      --border-strong: rgba(255,255,255,0.15); --text: #e8e8e0;
+      --text-muted: #9a9a92; --text-faint: #5e5e58;
+
+      --s-bg: #1f1608; --s-border: #8a6200; --s-label: #f5c842; --s-tag: #f5c842;
+      --a-bg: #0e1a06; --a-border: #3d6b18; --a-label: #a8dc72; --a-tag: #a8dc72;
+      --b-bg: #071525; --b-border: #0d4a82; --b-label: #7ec2f8; --b-tag: #7ec2f8;
+      --c-bg: #110f2a; --c-border: #3a2f99; --c-label: #c4bcff; --c-tag: #c4bcff;
+      --d-bg: #1f0e06; --d-border: #7a2e10; --d-label: #f5b08a; --d-tag: #f5b08a;
+      --f-bg: #1f0808; --f-border: #7a1818; --f-label: #f5a0a0; --f-tag: #f5a0a0;
+
+      --tag-aha-bg: #0e1a06; --tag-aha-text: #a8dc72;
+      --tag-bha-bg: #071525; --tag-bha-text: #7ec2f8;
+    }
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 2rem 1.5rem;
+    min-height: 100vh;
+  }
+
+  h1 {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 1.75rem;
+  }
+
+  .tier-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+    align-items: stretch;
+  }
+
+  .tier-label {
+    width: 42px;
+    min-width: 42px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 500;
+    flex-shrink: 0;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .tier-body {
+    flex: 1;
+    border-radius: var(--radius);
+    border: 0.5px solid var(--border);
+    background: var(--surface);
+    padding: 10px 12px;
+  }
+
+  .category-group { margin-bottom: 8px; }
+  .category-group:last-child { margin-bottom: 0; }
+
+  .cat-label {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-faint);
+    margin-bottom: 5px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .products { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .product {
+    border-radius: var(--radius-sm);
+    border: 0.5px solid var(--border);
+    padding: 7px 10px;
+    flex: 1;
+    min-width: 160px;
+    background: var(--bg);
+  }
+
+  .product-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; }
+  .product-name { font-size: 13px; font-weight: 500; color: var(--text); }
+  .product-altname { font-size: 11px; color: var(--text-faint); margin-top: 1px; font-family: 'DM Mono', monospace; }
+  .product-desc { font-size: 12px; color: var(--text-muted); margin-top: 4px; line-height: 1.45; }
+
+  .acid-tag {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 1px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+  .tag-aha { background: var(--tag-aha-bg); color: var(--tag-aha-text); }
+  .tag-bha { background: var(--tag-bha-bg); color: var(--tag-bha-text); }
+
+  /* Tier-specific colors */
+  .s .tier-label { background: var(--s-bg); color: var(--s-tag); border: 0.5px solid var(--s-border); }
+  .a .tier-label { background: var(--a-bg); color: var(--a-tag); border: 0.5px solid var(--a-border); }
+  .b .tier-label { background: var(--b-bg); color: var(--b-tag); border: 0.5px solid var(--b-border); }
+  .c .tier-label { background: var(--c-bg); color: var(--c-tag); border: 0.5px solid var(--c-border); }
+  .d .tier-label { background: var(--d-bg); color: var(--d-tag); border: 0.5px solid var(--d-border); }
+  .f .tier-label { background: var(--f-bg); color: var(--f-tag); border: 0.5px solid var(--f-border); }
+
+  .s .product { border-color: var(--s-border); background: var(--s-bg); }
+  .a .product { border-color: var(--a-border); background: var(--a-bg); }
+  .b .product { border-color: var(--b-border); background: var(--b-bg); }
+  .c .product { border-color: var(--c-border); background: var(--c-bg); }
+  .d .product { border-color: var(--d-border); background: var(--d-bg); }
+  .f .product { border-color: var(--f-border); background: var(--f-bg); }
+
+  .s .product-name { color: var(--s-label); }
+  .a .product-name { color: var(--a-label); }
+  .b .product-name { color: var(--b-label); }
+  .c .product-name { color: var(--c-label); }
+  .d .product-name { color: var(--d-label); }
+  .f .product-name { color: var(--f-label); }
+
+  .s .cat-label { color: var(--s-tag); }
+  .a .cat-label { color: var(--a-tag); }
+  .b .cat-label { color: var(--b-tag); }
+  .c .cat-label { color: var(--c-tag); }
+  .d .cat-label { color: var(--d-tag); }
+  .f .cat-label { color: var(--f-tag); }
+
+  @media (max-width: 500px) {
+    .product { min-width: 100%; }
+    body { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Skincare tier list</h1>
+
+<!-- ─── S ─────────────────────────────────────── -->
+<div class="tier-row s">
+  <div class="tier-label">S</div>
+  <div class="tier-body">
+
+    <div class="category-group">
+      <div class="cat-label">Daily essentials</div>
+      <div class="products">
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Sunscreen</div></div></div>
+          <div class="product-desc">Protects skin from UV radiation to prevent damage and aging</div>
+        </div>
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Moisturizer</div><div class="product-altname">Face-specific formulas only</div></div></div>
+          <div class="product-desc">Reduces water loss and maintains skin hydration</div>
+        </div>
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Cleanser</div></div></div>
+          <div class="product-desc">Removes dirt, oil, and residues from the skin surface</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-group" style="margin-top:8px;">
+      <div class="cat-label">Anti-aging</div>
+      <div class="products">
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Retinols & Retinoids</div><div class="product-altname">Tretinoin (Rx), adapalene, retinol</div></div></div>
+          <div class="product-desc">Increase cell turnover and stimulate collagen production</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─── A ─────────────────────────────────────── -->
+<div class="tier-row a">
+  <div class="tier-label">A</div>
+  <div class="tier-body">
+
+    <div class="category-group">
+      <div class="cat-label">Exfoliation</div>
+      <div class="products">
+        <div class="product">
+          <div class="product-header">
+            <div>
+              <div class="product-name">Alpha Hydroxy Acids</div>
+              <div class="product-altname">Glycolic · lactic · mandelic · citric · malic</div>
+            </div>
+            <span class="acid-tag tag-aha">AHA</span>
+          </div>
+          <div class="product-desc">Exfoliate the skin surface to improve texture and tone. Glycolic = strongest, lactic = gentler + hydrating, mandelic = mildest + antibacterial</div>
+        </div>
+        <div class="product">
+          <div class="product-header">
+            <div>
+              <div class="product-name">Salicylic Acid</div>
+              <div class="product-altname">BHA · betaine salicylate (gentler form)</div>
+            </div>
+            <span class="acid-tag tag-bha">BHA</span>
+          </div>
+          <div class="product-desc">Unclogs pores, good for blackheads and oily skin</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-group" style="margin-top:8px;">
+      <div class="cat-label">Multi-purpose actives</div>
+      <div class="products">
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Niacinamide</div><div class="product-altname">Vitamin B3</div></div></div>
+          <div class="product-desc">Regulates oil, reduces pore appearance, improves skin barrier</div>
+        </div>
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Vitamin C</div><div class="product-altname">Ascorbic acid · ácido ascórbico</div></div></div>
+          <div class="product-desc">Antioxidant, brightens skin, helps with dark spots</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-group" style="margin-top:8px;">
+      <div class="cat-label">Barrier & hydration</div>
+      <div class="products">
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Ceramides</div><div class="product-altname">Ceramidas</div></div></div>
+          <div class="product-desc">Repair and strengthen the skin barrier (especially useful with retinoids/acids)</div>
+        </div>
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Hyaluronic Acid</div><div class="product-altname">HA · ácido hialurônico</div></div></div>
+          <div class="product-desc">Pulls water into the skin → better hydration and plumpness</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─── B ─────────────────────────────────────── -->
+<div class="tier-row b">
+  <div class="tier-label">B</div>
+  <div class="tier-body">
+
+    <div class="category-group">
+      <div class="cat-label">Targeted acne treatments</div>
+      <div class="products">
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Azelaic Acid</div><div class="product-altname">Ácido azelaico</div></div></div>
+          <div class="product-desc">Reduces acne, redness, and helps with pigmentation</div>
+        </div>
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Benzoyl Peroxide</div><div class="product-altname">Peróxido de benzoíla</div></div></div>
+          <div class="product-desc">Kills acne-causing bacteria (for active breakouts)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-group" style="margin-top:8px;">
+      <div class="cat-label">Hydration</div>
+      <div class="products">
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Glycerin</div><div class="product-altname">Glicerina</div></div></div>
+          <div class="product-desc">Humectant that attracts water into the skin</div>
+        </div>
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Panthenol</div><div class="product-altname">Vitamin B5 · pantenol</div></div></div>
+          <div class="product-desc">Soothing, helps healing and hydration</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-group" style="margin-top:8px;">
+      <div class="cat-label">Lightweight occlusives</div>
+      <div class="products">
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Squalane</div><div class="product-altname">Esqualano</div></div></div>
+          <div class="product-desc">Lightweight oil that prevents moisture loss without clogging</div>
+        </div>
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Vaseline / Petrolatum</div><div class="product-altname">Petroleum jelly · vaselina</div></div></div>
+          <div class="product-desc">Most effective occlusive known; great for slugging and wound healing. Non-comedogenic despite reputation</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─── C ─────────────────────────────────────── -->
+<div class="tier-row c">
+  <div class="tier-label">C</div>
+  <div class="tier-body">
+
+    <div class="category-group">
+      <div class="cat-label">Anti-aging support</div>
+      <div class="products">
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Peptides</div><div class="product-altname">Peptídeos</div></div></div>
+          <div class="product-desc">Mild support for skin repair and elasticity (not magic, but decent)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-group" style="margin-top:8px;">
+      <div class="cat-label">Soothing / anti-inflammatory</div>
+      <div class="products">
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Centella Asiatica</div><div class="product-altname">Cica · gotu kola</div></div></div>
+          <div class="product-desc">Anti-inflammatory, reduces irritation and redness</div>
+        </div>
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Colloidal Oatmeal</div><div class="product-altname">Aveia coloidal</div></div></div>
+          <div class="product-desc">Very soothing, good for eczema and reactive/sensitive skin</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-group" style="margin-top:8px;">
+      <div class="cat-label">Cleansing</div>
+      <div class="products">
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Oil Cleansers</div><div class="product-altname">Demaquilante em óleo</div></div></div>
+          <div class="product-desc">Dissolve sunscreen and sebum better than regular cleansers</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-group" style="margin-top:8px;">
+      <div class="cat-label">Hydration / mild exfoliation</div>
+      <div class="products">
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Urea</div><div class="product-altname">Ureia</div></div></div>
+          <div class="product-desc">Hydrates and mildly exfoliates depending on concentration</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-group" style="margin-top:8px;">
+      <div class="cat-label">Brightening</div>
+      <div class="products">
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Alpha-Arbutin</div><div class="product-altname">Alfa-arbutina</div></div></div>
+          <div class="product-desc">Gentle brightening ingredient, works well paired with vitamin C</div>
+        </div>
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Tranexamic Acid</div><div class="product-altname">Ácido tranexâmico</div></div></div>
+          <div class="product-desc">Solid evidence for hyperpigmentation; increasingly popular</div>
+        </div>
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Kojic Acid</div><div class="product-altname">Ácido kójico</div></div></div>
+          <div class="product-desc">Brightening agent for dark spots; weaker than vitamin C but cheaper</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-group" style="margin-top:8px;">
+      <div class="cat-label">Plant oils</div>
+      <div class="products">
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Jojoba Oil</div><div class="product-altname">Óleo de jojoba</div></div></div>
+          <div class="product-desc">Mimics skin sebum, helps balance oil and soften skin</div>
+        </div>
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Sunflower Oil</div><div class="product-altname">Óleo de girassol</div></div></div>
+          <div class="product-desc">Light emollient rich in fatty acids, supports barrier</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─── D ─────────────────────────────────────── -->
+<div class="tier-row d">
+  <div class="tier-label">D</div>
+  <div class="tier-body">
+
+    <div class="category-group">
+      <div class="cat-label">Pore care</div>
+      <div class="products">
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Clay Masks</div><div class="product-altname">Kaolin · bentonite</div></div></div>
+          <div class="product-desc">Temporarily reduce oil and clean pores</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-group" style="margin-top:8px;">
+      <div class="cat-label">Heavy occlusives</div>
+      <div class="products">
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Lanolin</div><div class="product-altname">Lanolina</div></div></div>
+          <div class="product-desc">Heavy occlusive that locks in moisture (can clog pores for some)</div>
+        </div>
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Cocoa Butter</div><div class="product-altname">Manteiga de cacau · cocoa oil</div></div></div>
+          <div class="product-desc">Occlusive emollient that softens skin but can be comedogenic</div>
+        </div>
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Mineral Oil</div><div class="product-altname">Óleo mineral · vaselina líquida</div></div></div>
+          <div class="product-desc">Effective occlusive, non-comedogenic despite reputation; very cheap</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-group" style="margin-top:8px;">
+      <div class="cat-label">Formulation aids</div>
+      <div class="products">
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">PEG</div><div class="product-altname">Polyethylene glycol</div></div></div>
+          <div class="product-desc">Solvent/emulsifier that helps ingredients mix and penetrate</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-group" style="margin-top:8px;">
+      <div class="cat-label">Retinol alternatives</div>
+      <div class="products">
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Bakuchiol</div><div class="product-altname">Bakuchiol</div></div></div>
+          <div class="product-desc">Plant-based retinol alternative; much gentler but noticeably weaker results</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─── F ─────────────────────────────────────── -->
+<div class="tier-row f">
+  <div class="tier-label">F</div>
+  <div class="tier-body">
+    <div class="category-group">
+      <div class="cat-label">Avoid</div>
+      <div class="products">
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Saliva</div></div></div>
+          <div class="product-desc">Contains enzymes; not suitable or beneficial for skincare use</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
