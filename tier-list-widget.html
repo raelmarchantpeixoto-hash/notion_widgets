@@ -166,6 +166,11 @@
   .d .cat-label { color: var(--d-tag); }
   .f .cat-label { color: var(--f-tag); }
 
+  .product-intro { font-size: 12px; color: var(--text-muted); margin-top: 4px; line-height: 1.45; font-style: italic; }
+  .variant-list { margin-top: 8px; display: flex; flex-direction: column; gap: 5px; }
+  .variant-item { font-size: 12px; color: var(--text-muted); line-height: 1.45; padding-left: 10px; border-left: 2px solid var(--border-strong); }
+  .variant-name { font-weight: 500; color: var(--text); }
+
   @media (max-width: 500px) {
     .product { min-width: 100%; }
     body { padding: 1rem; }
@@ -203,8 +208,12 @@
       <div class="cat-label">Anti-aging</div>
       <div class="products">
         <div class="product">
-          <div class="product-header"><div><div class="product-name">Retinols & Retinoids</div><div class="product-altname">Tretinoin (Rx), adapalene, retinol</div></div></div>
-          <div class="product-desc">Increase cell turnover and stimulate collagen production</div>
+          <div class="product-header"><div><div class="product-name">Tretinoin</div><div class="product-altname">Ácido retinóico · prescription only (Rx)</div></div></div>
+          <div class="product-desc">Gold standard retinoid. Prescription-strength; the efficacy gap over OTC retinols is significant. Increases cell turnover and stimulates collagen production</div>
+        </div>
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">OTC Retinoids</div><div class="product-altname">Retinol · adapalene · retinal (retinaldehyde)</div></div></div>
+          <div class="product-desc">Over-the-counter alternatives to tretinoin. Same mechanism, weaker results. Adapalene is the strongest OTC option; retinal converts faster than retinol</div>
         </div>
       </div>
     </div>
@@ -224,21 +233,31 @@
           <div class="product-header">
             <div>
               <div class="product-name">Alpha Hydroxy Acids</div>
-              <div class="product-altname">Glycolic · lactic · mandelic · citric · malic</div>
+              <div class="product-altname">AHA · ácidos alfa-hidroxi</div>
             </div>
             <span class="acid-tag tag-aha">AHA</span>
           </div>
-          <div class="product-desc">Exfoliate the skin surface to improve texture and tone. Glycolic = strongest, lactic = gentler + hydrating, mandelic = mildest + antibacterial</div>
+          <div class="product-intro">All exfoliate the skin surface by loosening bonds between dead skin cells. Water-soluble, work on the surface layer.</div>
+          <div class="variant-list">
+            <div class="variant-item"><span class="variant-name">Glycolic acid</span> — smallest molecule, deepest penetration, strongest effect. Best for anti-aging, texture, and pigmentation. Most irritating of the three main AHAs</div>
+            <div class="variant-item"><span class="variant-name">Lactic acid</span> — gentler than glycolic, also a humectant so it hydrates while it exfoliates. Good entry point for beginners or sensitive skin</div>
+            <div class="variant-item"><span class="variant-name">Mandelic acid</span> — largest molecule, shallowest penetration, mildest. Antibacterial properties make it good for acne-prone skin. Very beginner-friendly</div>
+            <div class="variant-item"><span class="variant-name">Citric · tartaric · malic acid</span> — appear mostly as supporting acids in formulas, rarely the star ingredient. Citric also acts as an antioxidant</div>
+          </div>
         </div>
         <div class="product">
           <div class="product-header">
             <div>
-              <div class="product-name">Salicylic Acid</div>
-              <div class="product-altname">BHA · betaine salicylate (gentler form)</div>
+              <div class="product-name">Beta Hydroxy Acids</div>
+              <div class="product-altname">BHA · ácidos beta-hidroxi</div>
             </div>
             <span class="acid-tag tag-bha">BHA</span>
           </div>
-          <div class="product-desc">Unclogs pores, good for blackheads and oily skin</div>
+          <div class="product-intro">Oil-soluble, so they penetrate into pores — unlike AHAs which only work on the surface. Best for oily and acne-prone skin.</div>
+          <div class="variant-list">
+            <div class="variant-item"><span class="variant-name">Salicylic acid</span> — the main BHA. Unclogs pores, excellent for blackheads, whiteheads, and oily skin</div>
+            <div class="variant-item"><span class="variant-name">Betaine salicylate</span> — gentler salt form of salicylic acid, popular in Korean skincare. Good for sensitive skin that can't tolerate regular salicylic</div>
+          </div>
         </div>
       </div>
     </div>
@@ -289,6 +308,10 @@
         <div class="product">
           <div class="product-header"><div><div class="product-name">Benzoyl Peroxide</div><div class="product-altname">Peróxido de benzoíla</div></div></div>
           <div class="product-desc">Kills acne-causing bacteria (for active breakouts)</div>
+        </div>
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Zinc Oxide</div><div class="product-altname">Óxido de zinco</div></div></div>
+          <div class="product-desc">Anti-inflammatory and antibacterial. Found in sunscreens and acne treatments; often overlooked as a standalone active ingredient</div>
         </div>
       </div>
     </div>
@@ -350,6 +373,10 @@
           <div class="product-header"><div><div class="product-name">Colloidal Oatmeal</div><div class="product-altname">Aveia coloidal</div></div></div>
           <div class="product-desc">Very soothing, good for eczema and reactive/sensitive skin</div>
         </div>
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Snail Mucin</div><div class="product-altname">Baba de caracol · mucina de caracol</div></div></div>
+          <div class="product-desc">Hydrating and mildly healing. Popular in K-beauty with decent evidence behind it</div>
+        </div>
       </div>
     </div>
 
@@ -392,7 +419,7 @@
     </div>
 
     <div class="category-group" style="margin-top:8px;">
-      <div class="cat-label">Plant oils</div>
+      <div class="cat-label">Plant oils & occlusives</div>
       <div class="products">
         <div class="product">
           <div class="product-header"><div><div class="product-name">Jojoba Oil</div><div class="product-altname">Óleo de jojoba</div></div></div>
@@ -401,6 +428,10 @@
         <div class="product">
           <div class="product-header"><div><div class="product-name">Sunflower Oil</div><div class="product-altname">Óleo de girassol</div></div></div>
           <div class="product-desc">Light emollient rich in fatty acids, supports barrier</div>
+        </div>
+        <div class="product">
+          <div class="product-header"><div><div class="product-name">Mineral Oil</div><div class="product-altname">Óleo mineral · vaselina líquida</div></div></div>
+          <div class="product-desc">Extremely effective occlusive. Non-comedogenic despite its reputation; very cheap and well tolerated</div>
         </div>
       </div>
     </div>
@@ -433,10 +464,6 @@
         <div class="product">
           <div class="product-header"><div><div class="product-name">Cocoa Butter</div><div class="product-altname">Manteiga de cacau · cocoa oil</div></div></div>
           <div class="product-desc">Occlusive emollient that softens skin but can be comedogenic</div>
-        </div>
-        <div class="product">
-          <div class="product-header"><div><div class="product-name">Mineral Oil</div><div class="product-altname">Óleo mineral · vaselina líquida</div></div></div>
-          <div class="product-desc">Effective occlusive, non-comedogenic despite reputation; very cheap</div>
         </div>
       </div>
     </div>
